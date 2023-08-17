@@ -31,7 +31,7 @@ const mongoose = require('mongoose');
 // mongoose.connect('mongodb://127.0.0.1:27017/yc');
 
 // const dbUrl = process.env.DB_URL;
-const dbUrl = 'mongodb://127.0.0.1:27017/yc';
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yc';
 mongoose.connect(dbUrl);
 
 // mongoose.connect('mongodb://127.0.0.1:27017/iu');
@@ -57,9 +57,11 @@ app.use(mongoSanitize({
     })
   );
 
+  const secret = process.env.SECRET || 'thisshouldbebettersecret';
+
   const store = new MongoDBStore({
     url: dbUrl,
-    secret : 'thisshouldbebettersecret',
+    secret,
     touchAfter: 24 * 60 * 60
   });
 
@@ -70,7 +72,7 @@ app.use(mongoSanitize({
 const sessionConfig = {
     store,
     name: 'session',
-    secret : 'thisshouldbebettersecret',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
