@@ -31,8 +31,8 @@ const mongoose = require('mongoose');
 // mongoose.connect('mongodb://127.0.0.1:27017/yc');
 
 // const dbUrl = process.env.DB_URL;
-const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yc';
-// const dbUrl = 'mongodb://127.0.0.1:27017/yc';
+// const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yc';
+const dbUrl = 'mongodb://127.0.0.1:27017/yc';
 mongoose.connect(dbUrl);
 
 // mongoose.connect('mongodb://127.0.0.1:27017/iu');
@@ -184,6 +184,7 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', {err});
 })
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
